@@ -174,6 +174,17 @@ bin/download 2.4.6 community
 # bin/cli git checkout 2.4-develop
 # bin/composer install
 
+# Want to install Magento <2.4.6? In bin/setup-install, replace the lines:
+#  --elasticsearch-host="$ES_HOST" \
+#  --elasticsearch-port="$ES_PORT" \
+#  --opensearch-host="$OPENSEARCH_HOST" \
+#  --opensearch-port="$OPENSEARCH_PORT" \
+#  --search-engine=opensearch \
+# with:
+#  --elasticsearch-host="$OPENSEARCH_HOST" \
+#  --elasticsearch-port="$OPENSEARCH_PORT" \
+#  --search-engine=elasticsearch7 \
+
 # Run the setup installer for Magento:
 bin/setup magento.test
 
@@ -197,12 +208,12 @@ curl -s https://raw.githubusercontent.com/markshust/docker-magento/master/lib/te
 cp -R ~/Sites/existing src
 # or: git clone git@github.com:myrepo.git src
 
-# If your vendor directory was empty, populate it with:
-bin/composer install
-
 # Start some containers, copy files to them and then restart the containers:
 bin/start --no-dev
 bin/copytocontainer --all ## Initial copy will take a few minutes...
+
+# If your vendor directory was empty, populate it with:
+bin/composer install
 
 # Import existing database:
 bin/mysql < ../existing/magento.sql
